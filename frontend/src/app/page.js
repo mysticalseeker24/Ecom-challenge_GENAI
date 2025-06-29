@@ -1,10 +1,9 @@
-'use client'
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+"use client";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { addMessage, clear } from "../../redux/features/chatSlice";
-import InputBox from "@/components/InputBox";
-import ChatMessagesBox from "@/components/ChatMessagesBox";
-import { useEffect, useState } from "react";
+import InputBox from "../components/InputBox";
+import ChatMessagesBox from "../components/ChatMessagesBox";
 
 export default function Home() {
   const dispatch = useDispatch();
