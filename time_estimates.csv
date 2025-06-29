@@ -1,0 +1,15 @@
+Task,Estimated Hours,Actual Hours,Status
+Project Planning and Architecture Design,4,4.5,Completed
+Setup Project Structure and Docker Configuration,3,3.5,Completed
+Data Loading and Pinecone Setup,3,2.5,Completed
+Chat Service Development,5,6,Completed
+Product Search Service - Basic Setup,3,2,Completed
+Product Search Service - RAG Implementation,6,6,Completed
+Product Search Service - API Development,4,3.5,Completed
+Order Lookup Service Development,4,2,Completed
+Mock API Integration,2,1.5,Completed
+UI Development,6,4,Completed
+Testing and Debugging,8,3,Completed
+Documentation and Sample Questions,1,1,Completed
+Deployment and Final Testing,4,0,Could not complete
+Total,55,37.5,Completed

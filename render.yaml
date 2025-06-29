@@ -1,0 +1,129 @@
+services:
+  # Chat Service
+  - type: web
+    name: chat-service
+    env: docker
+    dockerfilePath: ./chat-service/Dockerfile
+    dockerContext: ./chat-service
+    region: oregon
+    plan: standard
+    branch: main
+    numInstances: 1
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: PORT
+        value: 8000
+    autoDeploy: true
+
+  # Product Service
+  - type: web
+    name: product-service
+    env: docker
+    dockerfilePath: ./product-service/Dockerfile
+    dockerContext: ./product-service
+    region: oregon
+    plan: standard
+    branch: main
+    numInstances: 1
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: PORT
+        value: 8001
+    autoDeploy: true
+
+  # Order Service
+  - type: web
+    name: order-service
+    env: docker
+    dockerfilePath: ./order-service/Dockerfile
+    dockerContext: ./order-service
+    region: oregon
+    plan: standard
+    branch: main
+    numInstances: 1
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: PORT
+        value: 8002
+    autoDeploy: true
+    disk:
+      name: order-data
+      mountPath: /app/datasets
+      sizeGB: 1
+
+  # Mock API Service
+  - type: web
+    name: mock-api
+    env: docker
+    dockerfilePath: ./order-service/Dockerfile
+    dockerContext: ./order-service
+    region: oregon
+    plan: standard
+    branch: main
+    numInstances: 1
+    healthCheckPath: /health
+    # Using buildCommand instead of startCommand for Docker services
+    buildCommand: echo "CMD=[\"uvicorn\", \"services.mock_api:app\", \"--host\", \"0.0.0.0\", \"--port\", \"$PORT\"]" > /opt/render/project/.render/cmd
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: PORT
+        value: 4000
+    autoDeploy: true
+    disk:
+      name: mock-api-data
+      mountPath: /app/datasets
+      sizeGB: 1
+
+  # Frontend
+  - type: web
+    name: frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    region: oregon
+    plan: standard
+    branch: main
+    numInstances: 1
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+      - key: CHAT_SERVICE_HOST
+        fromService:
+          name: chat-service
+          type: web
+          property: host
+      - key: CHAT_SERVICE_PORT
+        fromService:
+          name: chat-service
+          type: web
+          property: port
+      - key: PRODUCT_SERVICE_HOST
+        fromService:
+          name: product-service
+          type: web
+          property: host
+      - key: PRODUCT_SERVICE_PORT
+        fromService:
+          name: product-service
+          type: web
+          property: port
+      - key: ORDER_SERVICE_HOST
+        fromService:
+          name: order-service
+          type: web
+          property: host
+      - key: ORDER_SERVICE_PORT
+        fromService:
+          name: order-service
+          type: web
+          property: port
+    autoDeploy: true
