@@ -11,8 +11,16 @@ except Exception as e:
 df.dropna(subset=["Product", "Product_Category", "Sales", "Profit"], inplace=True)
 
 # Ensure Sales and Profit are numeric
-df = df[df["Sales"].apply(lambda x: isinstance(x, (int, float)) or str(x).replace(".", "", 1).isdigit())]
-df = df[df["Profit"].apply(lambda x: isinstance(x, (int, float)) or str(x).replace(".", "", 1).isdigit())]
+df = df[
+    df["Sales"].apply(
+        lambda x: isinstance(x, (int, float)) or str(x).replace(".", "", 1).isdigit()
+    )
+]
+df = df[
+    df["Profit"].apply(
+        lambda x: isinstance(x, (int, float)) or str(x).replace(".", "", 1).isdigit()
+    )
+]
 
 # Convert Sales and Profit to float
 df["Sales"] = df["Sales"].astype(float)
@@ -25,23 +33,37 @@ df["Order_Date"] = pd.to_datetime(df["Order_Date"], errors="coerce")
 df.dropna(subset=["Order_Date"], inplace=True)
 
 # Strip and lowercase string columns (optional cleanup)
-for col in ["Product", "Product_Category", "Gender", "Device_Type", "Customer_Login_type", "Order_Priority", "Payment_method"]:
+for col in [
+    "Product",
+    "Product_Category",
+    "Gender",
+    "Device_Type",
+    "Customer_Login_type",
+    "Order_Priority",
+    "Payment_method",
+]:
     df[col] = df[col].astype(str).str.strip().str.lower()
 # Initialize FastAPI app
-app = FastAPI(title="E-commerce Dataset API", description="API for querying e-commerce sales data")
+app = FastAPI(
+    title="E-commerce Dataset API", description="API for querying e-commerce sales data"
+)
 
 # Clean data (e.g., handle NaN values) at the start
 df.fillna(value="", inplace=True)
+
 
 # Endpoint to get all data
 @app.get("/")
 def get_status():
     """Checks the status"""
-    return {"status":"ok"}
+    return {"status": "ok"}
+
+
 @app.get("/data")
 def get_all_data():
     """Retrieve all records in the dataset."""
     return df.to_dict(orient="records")
+
 
 # Endpoint to filter data by Customer ID
 @app.get("/data/customer/{customer_id}")
@@ -52,23 +74,30 @@ def get_customer_data(customer_id: int):
         return {"error": f"No data found for Customer ID {customer_id}"}
     return filtered_data.to_dict(orient="records")
 
+
 # Endpoint to filter data by Product Category
 @app.get("/data/product-category/{category}")
 def get_product_category_data(category: str):
     """Retrieve all records for a specific Product Category."""
-    filtered_data = df[df["Product_Category"].str.contains(category, case=False, na=False)]
+    filtered_data = df[
+        df["Product_Category"].str.contains(category, case=False, na=False)
+    ]
     if filtered_data.empty:
         return {"error": f"No data found for Product Category '{category}'"}
     return filtered_data.to_dict(orient="records")
+
 
 # Endpoint to get orders with specific priorities
 @app.get("/data/order-priority/{priority}")
 def get_orders_by_priority(priority: str):
     """Retrieve all orders with the given priority."""
-    filtered_data = df[df["Order_Priority"].str.contains(priority, case=False, na=False)]
+    filtered_data = df[
+        df["Order_Priority"].str.contains(priority, case=False, na=False)
+    ]
     if filtered_data.empty:
         return {"error": f"No data found for Order Priority '{priority}'"}
     return filtered_data.to_dict(orient="records")
+
 
 # Endpoint to calculate total sales by Product Category
 @app.get("/data/total-sales-by-category")
@@ -76,6 +105,7 @@ def total_sales_by_category():
     """Calculate total sales by Product Category."""
     sales_summary = df.groupby("Product_Category")["Sales"].sum().reset_index()
     return sales_summary.to_dict(orient="records")
+
 
 # Endpoint to get high-profit products
 @app.get("/data/high-profit-products")
@@ -86,6 +116,7 @@ def high_profit_products(min_profit: float = 100.0):
         return {"error": f"No products found with profit greater than {min_profit}"}
     return filtered_data.to_dict(orient="records")
 
+
 # Endpoint to get shipping cost summary
 @app.get("/data/shipping-cost-summary")
 def shipping_cost_summary():
@@ -93,9 +124,10 @@ def shipping_cost_summary():
     summary = {
         "average_shipping_cost": df["Shipping_Cost"].mean(),
         "min_shipping_cost": df["Shipping_Cost"].min(),
-        "max_shipping_cost": df["Shipping_Cost"].max()
+        "max_shipping_cost": df["Shipping_Cost"].max(),
     }
     return summary
+
 
 # Endpoint to calculate total profit by Gender
 @app.get("/data/profit-by-gender")

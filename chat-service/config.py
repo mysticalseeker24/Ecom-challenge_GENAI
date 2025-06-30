@@ -11,8 +11,12 @@ if not OPENAI_API_KEY:
     logging.warning("OPENAI_API_KEY not set. LLM functionality will be limited.")
 
 # Service URLs
-PRODUCT_SEARCH_URL = os.getenv("PRODUCT_SERVICE_URL", "http://product-service:8001/api/products")
-ORDER_LOOKUP_URL = os.getenv("ORDER_SERVICE_URL", "http://order-service:8002/api/orders")
+PRODUCT_SEARCH_URL = os.getenv(
+    "PRODUCT_SERVICE_URL", "http://product-service:8001/api/products"
+)
+ORDER_LOOKUP_URL = os.getenv(
+    "ORDER_SERVICE_URL", "http://order-service:8002/api/orders"
+)
 
 # LLM Configuration
 LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4o")
@@ -24,9 +28,7 @@ LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "standard": {
-            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        },
+        "standard": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"},
     },
     "handlers": {
         "console": {
@@ -37,11 +39,7 @@ LOGGING_CONFIG = {
         },
     },
     "loggers": {
-        "": {
-            "handlers": ["console"],
-            "level": LOG_LEVEL,
-            "propagate": True
-        },
+        "": {"handlers": ["console"], "level": LOG_LEVEL, "propagate": True},
     },
 }
 

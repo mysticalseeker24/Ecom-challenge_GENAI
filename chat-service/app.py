@@ -30,20 +30,23 @@ app.add_middleware(
 # Include routers
 app.include_router(chat_router.router, prefix="/v1/api")
 
+
 @app.get("/")
 async def root():
     """Root endpoint"""
     return {
         "service": "E-Commerce Chat Service",
         "version": "1.0.0",
-        "status": "operational"
+        "status": "operational",
     }
+
 
 @app.get("/v1/health")
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy"}
+
 
 if __name__ == "__main__":
     logger.info("Starting E-Commerce Chat Service")

@@ -16,7 +16,7 @@ logger.info("Starting order service")
 app = FastAPI(
     title="E-Commerce Order Service",
     description="Order service that uses mockapi to provide order related user responses",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 app.add_middleware(
@@ -27,6 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.middleware("http")
 async def catch_exceptions_middleware(request: Request, call_next):
     try:
@@ -34,32 +35,40 @@ async def catch_exceptions_middleware(request: Request, call_next):
         return response
     except Exception as exc:
         logger.exception("Unhandled exception occurred")
-        return JSONResponse(status_code=500, content={"detail": str(exc), "status_code": 500})
+        return JSONResponse(
+            status_code=500, content={"detail": str(exc), "status_code": 500}
+        )
+
 
 app.include_router(order_router.router, prefix="/v1/api")
+
 
 @app.get("/")
 async def root():
     """Root endpoint for order service"""
     return {
-        "services":"E-Commerce Order Service",
-        "version":"1.0.0",
-        "status":"operational"
+        "services": "E-Commerce Order Service",
+        "version": "1.0.0",
+        "status": "operational",
     }
+
 
 @app.get("/v1/health")
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    return {"status":"healthy"}
+    return {"status": "healthy"}
+
 
 @app.get("/health/ready")
 async def readiness():
     return {"status": "ready"}
 
+
 @app.get("/health/live")
 async def liveness():
     return {"status": "live"}
 
+
 if __name__ == "__main__":
-    uvicorn.run(app,host="0.0.0.0", port="8002")
+    uvicorn.run(app, host="0.0.0.0", port="8002")

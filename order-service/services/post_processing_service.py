@@ -8,7 +8,9 @@ class PostProcessingService:
     def __init__(self) -> None:
         pass
 
-    def apply_post_processing(self, api_data, post_processing: Dict[str, Any], query_type: str):
+    def apply_post_processing(
+        self, api_data, post_processing: Dict[str, Any], query_type: str
+    ):
         """
         Apply post-processing filters to the API response data
         """
@@ -19,12 +21,18 @@ class PostProcessingService:
                 for item in api_data:
                     if "Order_Date" in item:
                         try:
-                            item["Order_Date_dt"] = datetime.strptime(item["Order_Date"], "%Y-%m-%d")
+                            item["Order_Date_dt"] = datetime.strptime(
+                                item["Order_Date"], "%Y-%m-%d"
+                            )
                         except:
                             item["Order_Date_dt"] = datetime.min
 
                 # Sort by date (descending) and get the most recent
-                sorted_data = sorted(api_data, key=lambda x: x.get("Order_Date_dt", datetime.min), reverse=True)
+                sorted_data = sorted(
+                    api_data,
+                    key=lambda x: x.get("Order_Date_dt", datetime.min),
+                    reverse=True,
+                )
                 return sorted_data[:1] if sorted_data else []
             return api_data
 

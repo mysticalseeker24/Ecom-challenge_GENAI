@@ -9,13 +9,15 @@ PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME")
 # API Keys
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-MOCK_API_URL = os.getenv("MOCK_API_URL","http://127.0.0.1:4001")
+MOCK_API_URL = os.getenv("MOCK_API_URL", "http://127.0.0.1:4001")
 RAG_TOP_K = os.getenv("RAG_TOP_K")
 if not OPENAI_API_KEY:
     logging.warning("OPENAI_API_KEY not set. LLM functionality will be limited.")
 
 # Service URLs
-PRODUCT_SEARCH_URL = os.getenv("PRODUCT_SERVICE_URL", "http://product-service:8001/api/products")
+PRODUCT_SEARCH_URL = os.getenv(
+    "PRODUCT_SERVICE_URL", "http://product-service:8001/api/products"
+)
 ORDER_LOOKUP_URL = os.getenv("ORDER_SERVICE_URL", "http://order-service:8002")
 
 # LLM Configuration
@@ -28,9 +30,7 @@ LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "standard": {
-            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        },
+        "standard": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"},
     },
     "handlers": {
         "console": {
@@ -41,11 +41,7 @@ LOGGING_CONFIG = {
         },
     },
     "loggers": {
-        "": {
-            "handlers": ["console"],
-            "level": LOG_LEVEL,
-            "propagate": True
-        },
+        "": {"handlers": ["console"], "level": LOG_LEVEL, "propagate": True},
     },
 }
 

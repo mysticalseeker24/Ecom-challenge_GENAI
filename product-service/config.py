@@ -14,8 +14,12 @@ RAG_TOP_K = os.getenv("RAG_TOP_K")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL")
-PRODUCT_SEARCH_URL = os.getenv("PRODUCT_SERVICE_URL", "http://product-service:8001/api/products")
-ORDER_LOOKUP_URL = os.getenv("ORDER_SERVICE_URL", "http://order-service:8002/api/orders")
+PRODUCT_SEARCH_URL = os.getenv(
+    "PRODUCT_SERVICE_URL", "http://product-service:8001/api/products"
+)
+ORDER_LOOKUP_URL = os.getenv(
+    "ORDER_SERVICE_URL", "http://order-service:8002/api/orders"
+)
 # LLM Configuration
 LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4o")
 LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.1"))
@@ -26,9 +30,7 @@ LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "standard": {
-            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        },
+        "standard": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"},
     },
     "handlers": {
         "console": {
@@ -39,11 +41,7 @@ LOGGING_CONFIG = {
         },
     },
     "loggers": {
-        "": {
-            "handlers": ["console"],
-            "level": LOG_LEVEL,
-            "propagate": True
-        },
+        "": {"handlers": ["console"], "level": LOG_LEVEL, "propagate": True},
     },
 }
 

@@ -2,10 +2,14 @@ from typing import Dict, Any
 from dataclasses import dataclass
 from langchain.prompts import ChatPromptTemplate
 
+
 class PromptHelperService:
     def __init__(self) -> None:
-        self.order_query_analysis_prompt = ChatPromptTemplate.from_messages([
-            ("system","""You are an AI assistant for an e-commerce website specializing in musical instruments and other products.
+        self.order_query_analysis_prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """You are an AI assistant for an e-commerce website specializing in musical instruments and other products.
             Your task is to analyze customer queries about their orders and determine which API endpoint to call.
 
             Available API endpoints:
@@ -36,12 +40,16 @@ class PromptHelperService:
             }}
 
             The "parameters" should include any path parameters needed for the endpoint.
-            Only return the JSON object, no additional text. not even ```json```"""
-            ),
-            ("user", "Customer ID: {customer_id}\nQuery: {query}")
-        ])
-        self.response_formatting_prompt = ChatPromptTemplate.from_messages([
-            ("system", """You are a helpful e-commerce assistant. Format the following order data into a friendly, conversational response.
+            Only return the JSON object, no additional text. not even ```json```""",
+                ),
+                ("user", "Customer ID: {customer_id}\nQuery: {query}"),
+            ]
+        )
+        self.response_formatting_prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """You are a helpful e-commerce assistant. Format the following order data into a friendly, conversational response.
                 For dates, format them as "Month Day, Year".
                 For monetary values, include the dollar sign and format as currency.
                 If asked about most recent orders, make sure to highlight that these are the most recent ones.
@@ -53,15 +61,14 @@ class PromptHelperService:
                 Here is the raw data to format:
                 {data}
 
-                Format this into a response that answers the customer's query directly and politely."""),
-             ("user", "Please format the response.")
-        ])
-
+                Format this into a response that answers the customer's query directly and politely.""",
+                ),
+                ("user", "Please format the response."),
+            ]
+        )
 
     def get_order_query_analysis_prompt(self):
-            return self.order_query_analysis_prompt
-        
+        return self.order_query_analysis_prompt
 
     def get_response_formatting_prompt(self):
-            return self.response_formatting_prompt
-        
+        return self.response_formatting_prompt

@@ -8,7 +8,14 @@ class ResponseFormatterService:
     def __init__(self) -> None:
         pass
 
-    async def format_response(self, query: str, customer_id: str, data: Any, response_formatting_prompt: Any, llm: Any) -> str:
+    async def format_response(
+        self,
+        query: str,
+        customer_id: str,
+        data: Any,
+        response_formatting_prompt: Any,
+        llm: Any,
+    ) -> str:
         """
         Format the API response data into a user-friendly message
         """
@@ -40,11 +47,9 @@ class ResponseFormatterService:
 
             # Use LLM to format the response
             formatting_chain = response_formatting_prompt | llm
-            formatting_result = formatting_chain.invoke({
-                "query": query,
-                "customer_id": customer_id,
-                "data": json_data
-            })
+            formatting_result = formatting_chain.invoke(
+                {"query": query, "customer_id": customer_id, "data": json_data}
+            )
 
             return formatting_result.content
         except Exception as e:
@@ -54,11 +59,13 @@ class ResponseFormatterService:
                 if isinstance(data, list) and len(data) > 0:
                     item = data[0]
                     details = []
-                    if 'Order_Date' in item:
-                        details.append(f"ordered on {datetime.strptime(item['Order_Date'], '%Y-%m-%d').strftime('%B %d, %Y')}")
-                    if 'Product_Category' in item:
+                    if "Order_Date" in item:
+                        details.append(
+                            f"ordered on {datetime.strptime(item['Order_Date'], '%Y-%m-%d').strftime('%B %d, %Y')}"
+                        )
+                    if "Product_Category" in item:
                         details.append(f"category: {item['Product_Category']}")
-                    if 'Sales' in item:
+                    if "Sales" in item:
                         details.append(f"amount: ${float(item['Sales']):.2f}")
                     return f"I found your order ({' '.join(details)}) but had trouble formatting details. Please contact support for more information."
             except Exception as fallback_error:

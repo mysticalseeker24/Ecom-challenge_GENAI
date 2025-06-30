@@ -1,5 +1,6 @@
 from langchain_openai import ChatOpenAI
 
+
 class LLMService:
     def __init__(self) -> None:
         self.llm = ChatOpenAI(
@@ -9,4 +10,3 @@ class LLMService:
 
     def get_llm(self):
         return self.llm
-    
