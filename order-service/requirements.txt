@@ -8,3 +8,6 @@ langchain-openai
 openai
 pandas
 numpy
+black
+flake8
+pre-commit

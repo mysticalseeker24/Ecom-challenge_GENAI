@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 import uvicorn
 import logging
 import logging.config
@@ -27,7 +28,7 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(chat_router.router, prefix="/api")
+app.include_router(chat_router.router, prefix="/v1/api")
 
 @app.get("/")
 async def root():
@@ -38,6 +39,7 @@ async def root():
         "status": "operational"
     }
 
+@app.get("/v1/health")
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""

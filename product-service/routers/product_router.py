@@ -13,7 +13,7 @@ from services.product_service import ProductService
 logger = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/api/products",
+    prefix="/products",
     tags=["products"]
 )
 

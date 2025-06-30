@@ -7,3 +7,6 @@ langchain
 langchain-openai
 openai
 langchain-pinecone
+black
+flake8
+pre-commit
