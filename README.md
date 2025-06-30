@@ -60,7 +60,7 @@ EMBEDDING_MODEL=text-embedding-ada-002
 RAG_TOP_K=5
 
 # frontend .env.production
-NEXT_PUBLIC_CHAT_SERVICE_API = "http://localhost:8000/api" // make sure to keep this url it is configured for docker services
+NEXT_PUBLIC_CHAT_SERVICE_API = "http://localhost:8010" // Updated port to avoid conflicts
 
 ```
 

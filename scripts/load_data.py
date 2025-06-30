@@ -1,7 +1,14 @@
 import os
 import sys
+import numpy as np
 import warnings
-warnings.filterwarnings("ignore", category=RuntimeWarning)
+
+# Temporarily ignore RuntimeWarnings for a specific block of code
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore", category=RuntimeWarning)
+    # Your NumPy code that might produce RuntimeWarnings here
+    result = np.exp2(np.array([-113])) # Example code
+    print(result) # This will not show the warning
 
 # Set project root (parent of 'scripts') in sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
