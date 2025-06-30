@@ -9,3 +9,5 @@ openai
 black
 flake8
 pre-commit
+pytest
+mypy
