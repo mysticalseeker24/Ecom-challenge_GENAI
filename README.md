@@ -130,7 +130,38 @@ This will:
 
 ---
 
-## 📁 Data Sources
+## 📡 API Endpoints
+
+### Chat-Service
+
+- Base URL: `/v1/api`
+- `POST /v1/api/chat`
+  - Request: `messages`, `conversation_id?`, `customer_id?`, `metadata?`
+  - Response: `response`, `requires_customer_id`, `conversation_id`, `metadata`, `source_type`
+- `GET /v1/api/health` → `{"status":"healthy"}`
+- `GET /` → root status
+- `GET /v1/health`, `GET /health` → health check
+
+### Order-Service
+
+- Base URL: `/v1/api`
+- `POST /v1/api/orders/query`
+  - Request: `messages`, `conversation_id?`, `customer_id?`, `metadata?`
+  - Response: `response`, `requires_customer_id`, `conversation_id`, `metadata`, `source_type`
+- `GET /` → root status
+- `GET /v1/health`, `GET /health` → health check
+- `GET /health/ready`, `GET /health/live` → readiness & liveness
+
+### Product-Service
+
+- Base URL: `/v1/api`
+- `POST /v1/api/products/query`
+  - Request: `messages`, `customer_id?`, `metadata?`
+  - Response: `response`, `metadata`
+- `GET /` → running status
+- `GET /v1/health`, `GET /health` → health check
+- `GET /health/ready`, `GET /health/live` → readiness & liveness
+##  Data Sources
 
 * `Product_Information_Dataset.csv` — Source for product-service RAG system.
 * `Order_Data_Dataset.csv`
