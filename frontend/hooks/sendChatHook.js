@@ -11,9 +11,9 @@ const useSendChat = () => {
     const sendMessage = async (requestObject) => {
         try {
 
-            console.log(`[sendChatHook] Sending chat to URL: ${CHAT_SERVICE_API}/api/chat`, requestObject);
+            console.log(`[sendChatHook] Sending chat to URL: ${CHAT_SERVICE_API}/v1/api/chat`, requestObject);
             setLoading(true);
-            const response = await fetch(`${CHAT_SERVICE_API}/api/chat`, {
+            const response = await fetch(`${CHAT_SERVICE_API}/v1/api/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
