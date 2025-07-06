@@ -32,7 +32,7 @@ class PineconeService:
             pinecone_api_key=PINECONE_API_KEY,
         )
 
-        self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
+        self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": RAG_TOP_K})
 
         logger.info("Pinecone service initialized successfully")
 

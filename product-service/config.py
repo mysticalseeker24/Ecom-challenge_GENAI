@@ -9,7 +9,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     logging.warning("OPENAI_API_KEY not set. LLM functionality will be limited.")
-RAG_TOP_K = os.getenv("RAG_TOP_K")
+RAG_TOP_K = int(os.getenv("RAG_TOP_K", "5"))
 # Service URLs
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")

@@ -50,8 +50,23 @@ async def handle_product_query(
             request.metadata,
         )
 
+        # Handle different response formats from the RAG chain
+        if isinstance(response, dict):
+            answer = response.get("answer") or response.get("output") or response.get("response")
+            if not answer:
+                # If no expected key, try to get the first string value
+                for value in response.values():
+                    if isinstance(value, str):
+                        answer = value
+                        break
+                else:
+                    answer = "I'm sorry, I couldn't generate a proper response."
+        else:
+            answer = str(response)
+
         return ProductQueryResponse(
-            response=response["answer"], metadata={"query": request.messages}
+            response=answer, 
+            metadata={"query": request.messages, "raw_response": response}
         )
     except Exception as e:
         logger.error(f"Error handling product query: {str(e)}", exc_info=True)

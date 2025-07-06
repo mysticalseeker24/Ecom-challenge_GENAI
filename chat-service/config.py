@@ -12,10 +12,10 @@ if not OPENAI_API_KEY:
 
 # Service URLs
 PRODUCT_SEARCH_URL = os.getenv(
-    "PRODUCT_SERVICE_URL", "http://product-service:8001/api/products"
+    "PRODUCT_SERVICE_URL", "http://product-service:8001/v1/api/products"
 )
 ORDER_LOOKUP_URL = os.getenv(
-    "ORDER_SERVICE_URL", "http://order-service:8002/api/orders"
+    "ORDER_SERVICE_URL", "http://order-service:8002/v1/api/orders"
 )
 
 # LLM Configuration
